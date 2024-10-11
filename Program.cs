@@ -33,14 +33,16 @@ namespace network_access_checker
 
                 try
                 {
-                    var response = client.Send(new HttpRequestMessage(HttpMethod.Get, "http://google.com"));
-                    if (response?.StatusCode == HttpStatusCode.OK)
+                    using (var response = client.Send(new HttpRequestMessage(HttpMethod.Get, "http://google.com")))
                     {
-                        Log(timeMessage + "Network is available!", log);
-                    }
-                    else
-                    {
-                        Log(timeMessage + "ERROR!", log);
+                        if (response?.StatusCode == HttpStatusCode.OK)
+                        {
+                            Log(timeMessage + "Network is available!", log);
+                        }
+                        else
+                        {
+                            Log(timeMessage + "ERROR!", log);
+                        }
                     }
                 }
                 catch (Exception ex)
